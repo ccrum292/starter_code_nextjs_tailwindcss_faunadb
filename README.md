@@ -1,0 +1,1 @@
+# starter_code_nextjs_tailwindcss_faunadb
