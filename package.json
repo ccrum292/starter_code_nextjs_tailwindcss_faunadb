@@ -1,0 +1,25 @@
+{
+  "name": "with-tailwindcss",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-regular-svg-icons": "^5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "next": "^9.2.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.10",
+    "@types/react": "^16.9.53",
+    "postcss-preset-env": "^6.7.0",
+    "tailwindcss": "^1.4.0",
+    "typescript": "^4.0.3"
+  }
+}
