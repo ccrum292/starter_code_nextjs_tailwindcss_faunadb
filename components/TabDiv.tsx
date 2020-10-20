@@ -1,4 +1,6 @@
 import { useState } from "react";
+import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
 
 export default function TabDiv() {
   const [indexOfActiveTab, setIndexOfActiveTab] = useState(0);
@@ -23,7 +25,11 @@ export default function TabDiv() {
           </li>
         </ul>
         <div className="bg-gray-700 border-b-4 border-r-4 border-l-4 border-gray-300 rounded-b-lg">
-          Form Here
+          {
+            indexOfActiveTab === 0 ?
+              <LoginForm /> :
+              <RegisterForm />
+          }
         </div>
       </div>
 

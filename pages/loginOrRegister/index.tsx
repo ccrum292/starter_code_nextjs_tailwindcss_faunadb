@@ -8,7 +8,6 @@ import Modal from "../../components/Modal";
 
 export default function LoginOrRegister() {
   const { navOpen, setNavOpen } = useContext(UserAndNavContext);
-  const [modalOpen, setModalOpen] = useState(true)
   return (
     <div className="flex flex-col min-h-screen bg-gray-900">
       <Head>
@@ -24,7 +23,6 @@ export default function LoginOrRegister() {
           </div>
         )}
         <TabDiv />
-        <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
       </div>
     </div>
   );

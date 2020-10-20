@@ -17,7 +17,7 @@ export default function Modal({ modalOpen, setModalOpen }) {
               <FontAwesomeIcon onClick={e => {
                 e.preventDefault()
                 setModalOpen(() => !modalOpen)
-              }} className="no-select absolute top-0 right-0 cursor-pointer mr-4 mt-2 opacity-75 transition duration-700 ease-in-out transform sm:hover:opacity-100 sm:hover:scale-110" style={{ color: "#ecc94b" }} size="2x" icon={faTimes} />
+              }} className="no-select absolute top-0 right-0 cursor-pointer mr-4 mt-2 opacity-75 transition duration-700 ease-in-out transform sm:hover:opacity-100 sm:hover:scale-110" style={{ color: "#fff" }} size="2x" icon={faTimes} />
             </div>
           </div > : null
       }
