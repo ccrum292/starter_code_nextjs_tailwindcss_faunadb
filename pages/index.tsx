@@ -1,11 +1,26 @@
 import Nav from '../components/Nav'
 import Head from 'next/head'
 import SideNavMenu from "../components/SideNavMenu"
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserAndNavContext from "../context/userAndNavContext";
 
 export default function IndexPage() {
   const { navOpen, setNavOpen } = useContext(UserAndNavContext);
+  const getConnection = async () => {
+    const maryP = await fetch('/api')
+    const data = await maryP.json()
+    console.log(res);
+    console.log(data);
+  }
+
+  useEffect(() => {
+    // const secret = process.env.FAUNADB_SECRET_KEY
+    // console.log(secret);
+
+    getConnection()
+
+  }, [])
+
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900">

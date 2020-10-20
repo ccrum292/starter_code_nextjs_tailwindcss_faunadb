@@ -4,7 +4,6 @@ import SideNavMenu from "../../components/SideNavMenu";
 import { useContext, useState } from "react";
 import UserAndNavContext from "../../context/userAndNavContext";
 import TabDiv from "../../components/TabDiv";
-import Modal from "../../components/Modal";
 
 export default function LoginOrRegister() {
   const { navOpen, setNavOpen } = useContext(UserAndNavContext);
