@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { useState, useContext } from "react";
 import NavItem from "./NavItem"
 import UserAndNavContext from "../context/userAndNavContext";
@@ -45,25 +43,6 @@ export default function Nav() {
             </a>
           </Link>
         </div>
-        {/* <div
-          onClick={() => {
-            setSearchDivOpen(!searchDivOpen);
-          }}
-          className="p-2 cursor-pointer transition duration-300 ease-in-out transform hover:scale-125"
-        >
-          <FontAwesomeIcon
-            style={{ color: "#e2e8f0" }}
-            size="2x"
-            icon={faSearch}
-          />
-        </div>
-        <div className="m-2 cursor-pointer transition duration-300 ease-in-out transform hover:scale-125">
-          <FontAwesomeIcon
-            style={{ color: "#e2e8f0" }}
-            size="2x"
-            icon={faShoppingCart}
-          />
-        </div> */}
       </div>
       {navOpen ? (
         <div className="flex flex-col bg-gray-700 rounded-b-full pt-1 pb-12 sm:rounded-b-lg sm:py-2 lg:hidden">
