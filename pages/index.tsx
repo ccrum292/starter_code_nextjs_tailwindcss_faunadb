@@ -8,7 +8,7 @@ import { server } from "../lib/config";
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  const res = await fetch(`${server}/api`);
+  const res = await fetch(`${server}/api/users/login`);
   const data = await res.json();
   console.log(data);
   return {
@@ -23,9 +23,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
 export default function IndexPage(props) {
   const { navOpen, setNavOpen } = useContext(UserAndNavContext);
-
-  console.log(props);
-
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900">

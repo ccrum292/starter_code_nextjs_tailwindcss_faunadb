@@ -4,6 +4,7 @@ import RegisterForm from "../components/RegisterForm";
 
 export default function TabDiv() {
   const [indexOfActiveTab, setIndexOfActiveTab] = useState(0);
+  const [successfulRegistration, setSuccessfulRegistration] = useState(false);
 
   const handleTabClick = e => {
     setIndexOfActiveTab(e.target.value);
@@ -27,8 +28,8 @@ export default function TabDiv() {
         <div className="bg-gray-700 border-b-4 border-r-4 border-l-4 border-gray-300 rounded-b-lg">
           {
             indexOfActiveTab === 0 ?
-              <LoginForm /> :
-              <RegisterForm />
+              <LoginForm successfulRegistration={successfulRegistration} setSuccessfulRegistration={setSuccessfulRegistration} /> :
+              <RegisterForm successfulRegistration={successfulRegistration} setSuccessfulRegistration={setSuccessfulRegistration} indexOfActiveTab={indexOfActiveTab} setIndexOfActiveTab={setIndexOfActiveTab} />
           }
         </div>
       </div>
