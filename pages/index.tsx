@@ -9,10 +9,8 @@ import { server } from "../lib/config";
 export const getStaticProps: GetStaticProps = async () => {
 
   const res = await fetch(`${server}/api`);
-  // const data = await res.json();
-  console.log(res);
-  // console.log(data);
-  const data = { data: ["hello world"] }
+  const data = await res.json();
+  console.log(data);
   return {
     props: {
       data

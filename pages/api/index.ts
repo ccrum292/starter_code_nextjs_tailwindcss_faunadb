@@ -8,8 +8,13 @@ const client = new faunadb.Client({ secret })
 export default async (req, res) => {
   try {
     const dbs = await client.query(
-      res.status(200).send("Connection Complete")
+      q.Login(
+        q.Match(q.Index("users_by_email"), "alice@site.example"),
+        { password: "new password" }
+      )
     )
+
+    return res.status(200).json(dbs);
 
   } catch (e) {
     res.status(500).json({ error: e.message })

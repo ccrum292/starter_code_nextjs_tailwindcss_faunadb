@@ -1,0 +1,249 @@
+server key Id (new): 280015894375039494
+secret: fnAD4tD467ACBkbPKjcPc4AA8XAWjWDSvOhW4af0
+
+
+10/21/20
+## Making a new User Database using the faunaDB cli 
+
+fauna create-database my_starter_app
+
+fauna shell my_starter_app
+
+create db 
+CreateKey({
+  name: "Client key for app1",
+  database: Database("app1"),
+  role: "client",
+})
+returns
+{
+  ref: Database("app1"),
+  ts: 1603297038776000,
+  name: 'app1',
+  global_id: 'yxtcs71kcyby1'
+}
+
+
+Server Key
+CreateKey({
+  name: "Server key for app1",
+  database: Database("app1"),
+  role: "server",
+})
+returns
+{
+  ref: Ref(Keys(), "280009953373061641"),
+  ts: 1603297150935000,
+  database: Database("app1"),
+  role: 'server',
+  secret: 'fnAD4suRrGACCegCfmUYmF8JdJUvMvVpeWl1XAUt',
+  hashed_secret: '$2a$05$YGIuctYkx9si7V2zxW8ImeZFvK0pzniNSNhyUMOpPxhm5whhT9VR.'
+}
+
+
+Client Key
+CreateKey({
+  name: "Client key for app1",
+  database: Database("app1"),
+  role: "client",
+})
+returns
+{
+  ref: Ref(Keys(), "280010085045895689"),
+  ts: 1603297276500000,
+  role: 'client',
+  secret: 'fnAD4suwVLACCd1a9FUwjc11cCDLahQqGDlkXnUa',
+  hashed_secret: '$2a$05$AHBTPWxJp/LJ2RsI3tQUBe7mVVUOOZqaU9sqL0czUQ09FwEEI6st6'
+}
+
+then .exit
+
+
+start shell with secret for the server key
+
+fauna shell --secret=fnAD4suRrGACCegCfmUYmF8JdJUvMvVpeWl1XAUt
+
+
+create a collection to store user documents 
+
+CreateCollection({ name: "users" })
+returns 
+{
+  ref: Collection("users"),
+  ts: 1603298013953000,    
+  history_days: 30,        
+  name: 'users'
+}
+
+
+create a public index for users
+
+CreateIndex({
+  name: "users_by_email",
+  permissions: { read: "public"},
+  source: Collection("users"),
+  terms: [{field: ["data", "email"]}],
+  unique: true,
+})
+returns
+{
+  ref: Index("users_by_email"),   
+  ts: 1603298145173000,
+  active: true,
+  serialized: true,
+  name: 'users_by_email',
+  permissions: { read: 'public' },
+  source: Collection("users"),
+  terms: [ { field: [ 'data', 'email' ] } ],
+  unique: true,
+  partitions: 1
+}
+
+
+create users
+
+Create(
+  Collection("users"),
+  {
+    credentials: { password: "secret password" },
+    data: {
+      email: "alice@site.example",
+    },
+  }
+)
+returns 
+{
+  ref: Ref(Collection("users"), "280011820491604489"),
+  ts: 1603298931550000,
+  data: { email: 'alice@site.example' }
+}
+
+
+user login
+
+Login(
+  Match(Index("users_by_email"), "alice@site.example"),
+  { password: "secret password" },
+)
+returns
+{
+  ref: Ref(Tokens(), "280011990121841161"),
+  ts: 1603299093310000,
+  instance: Ref(Collection("users"), "280011820491604489"),    
+  secret: 'fnED4s1r5BACCQPiy3ZKYAIJU_t5VC3WJ9l7j3ifwbDO-6QhZEM'
+}
+
+
+user logout
+
+client code
+client.query(q.Logout(true))
+
+
+user updates password
+
+Update(
+  Ref(Collection("users"), "280011820491604489"),
+  {
+    credentials: { password: "new password" },
+  }
+)
+returns
+{
+  ref: Ref(Collection("users"), "280011820491604489"),
+  ts: 1603299620083000,
+  data: { email: 'alice@site.example' }
+}
+
+
+Check credentials  (without creating a token)
+
+Identify(
+  Ref(Collection("users"), "280011820491604489"),
+  "new password"
+)
+returns
+true
+
+
+Third-party delegation
+
+CreateIndex({
+  name: "tokens_by_instance",
+  permissions: { read: "public" },
+  source: Tokens(),
+  terms: [{ field: "instance" }],
+  values: [{field: ["data", "name"]}]
+})
+returns
+{
+  ref: Index("tokens_by_instance"),
+  ts: 1603300101502000,
+  active: true,
+  serialized: true,
+  name: 'tokens_by_instance',
+  permissions: { read: 'public' },
+  source: Tokens(),
+  terms: [ { field: 'instance' } ],
+  values: [ { field: [ 'data', 'name' ] } ],
+  partitions: 1
+}
+
+create a token for each third-party service
+Map(
+  [
+    "Desktop App",
+    "Mobile App",
+    "Web Service"
+  ],
+  Lambda(
+    "service",
+    Login(
+      Match(Index("users_by_email"), "alice@site.example"),
+      {
+        password: "new password",
+        data: { name: Var("service") }
+      }
+    )
+  )
+)
+returns
+[
+  {
+    ref: Ref(Tokens(), "280013317845549577"),
+    ts: 1603300359545000,
+    data: { name: 'Desktop App' },
+    instance: Ref(Collection("users"), "280011820491604489"),
+    secret: 'fnED4s6hBpACCQPiy3ZKYAIJTEwYO9q1ajthR49kpLxdeP5bv-g'
+  },
+  {
+    ref: Ref(Tokens(), "280013317845551625"),
+    ts: 1603300359545000,
+    data: { name: 'Mobile App' },
+    instance: Ref(Collection("users"), "280011820491604489"),
+    secret: 'fnED4s6hBpAKCQPiy3ZKYAIJOQnOXfY_1U64VylGlpvJTJIyMCU'
+  },
+  {
+    ref: Ref(Tokens(), "280013317845550601"),
+    ts: 1603300359545000,
+    data: { name: 'Web Service' },
+    instance: Ref(Collection("users"), "280011820491604489"),
+    secret: 'fnED4s6hBpAGCQPiy3ZKYAIJAZDDJjZPmSKdHarI1e-yH6J0GL4'
+  }
+]
+
+
+In client code, we can list all of the currently logged-in user's tokens by querying index
+client.query(
+  q.Paginate(
+    q.Match(
+      q.Index("tokens_by_instance"),
+      q.Select("instance", q.Identify())
+    )
+  )
+)
+.then(ret => console.log(ret))
+.catch(err => console.log("Error:", err))
+
+would log
+{ data: ["Desktop App", "Mobile App", "Web Service" ] }

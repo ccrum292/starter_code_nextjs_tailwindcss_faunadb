@@ -11,11 +11,11 @@ export default function LoginForm() {
     <div className="w-full">
       <form onSubmit={e => handleSubmit(e)} className="bg-gray-800">
         <div className="mb-4">
-          <label className="jost block text-white text-sm mx-2 pt-2 mb-2" for="email">Email</label>
+          <label className="jost block text-white text-sm mx-2 pt-2 mb-2" htmlFor="email">Email</label>
           <input type="email" className="jost shadowClass appearance-none border rounded mx-2 py-2 px-4 text-grey-700 leading-tight focus:outline-none" id="email" placeholder="Email" />
         </div>
         <div className="mb-4">
-          <label className="jost block text-white text-sm mx-2 pt-2 mb-2" for="password">Password</label>
+          <label className="jost block text-white text-sm mx-2 pt-2 mb-2" htmlFor="password">Password</label>
           <input type="password" className="jost shadowClass appearance-none border rounded mx-2 py-2 px-4 text-grey-700 leading-tight focus:outline-none" id="password" placeholder="Password" />
         </div>
         <div className="flex items-center justify-between">
