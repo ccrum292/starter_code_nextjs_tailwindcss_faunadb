@@ -5,13 +5,14 @@ console.log(secret);
 const q = faunadb.query
 const client = new faunadb.Client({ secret })
 
-module.exports = async (req, res) => {
-  try{
+export default async (req, res) => {
+  try {
     const dbs = await client.query(
       res.status(200).send("Connection Complete")
     )
 
-  } catch(e) {
-    res.status().json({ error: e.message })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
   }
 }
+

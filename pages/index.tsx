@@ -3,23 +3,30 @@ import Head from 'next/head'
 import SideNavMenu from "../components/SideNavMenu"
 import { useContext, useEffect } from "react";
 import UserAndNavContext from "../context/userAndNavContext";
+import { GetStaticProps } from "next";
+import { server } from "../lib/config";
 
-export default function IndexPage() {
-  const { navOpen, setNavOpen } = useContext(UserAndNavContext);
-  const getConnection = async () => {
-    const maryP = await fetch('/api')
-    const data = await maryP.json()
-    console.log(res);
-    console.log(data);
+export const getStaticProps: GetStaticProps = async () => {
+
+  const res = await fetch(`${server}/api`);
+  // const data = await res.json();
+  console.log(res);
+  // console.log(data);
+  const data = { data: ["hello world"] }
+  return {
+    props: {
+      data
+    }
   }
+}
 
-  useEffect(() => {
-    // const secret = process.env.FAUNADB_SECRET_KEY
-    // console.log(secret);
 
-    getConnection()
 
-  }, [])
+
+export default function IndexPage(props) {
+  const { navOpen, setNavOpen } = useContext(UserAndNavContext);
+
+  console.log(props);
 
 
   return (
@@ -32,7 +39,7 @@ export default function IndexPage() {
         />
         <title>Caleb Crum Starter Code</title>
       </Head>
-      <Nav     />
+      <Nav />
       <div className="flex-grow lg:flex">
         {navOpen ? null : (
           <div className="hidden lg:block">
