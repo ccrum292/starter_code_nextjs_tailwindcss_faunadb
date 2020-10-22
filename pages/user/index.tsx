@@ -3,7 +3,6 @@ import Head from "next/head";
 import SideNavMenu from "../../components/SideNavMenu";
 import { useContext, useState, useEffect } from "react";
 import UserAndNavContext from "../../context/userAndNavContext";
-import PrivateRoute from "../../components/PrivateRoute";
 import { useRouter } from "next/router";
 
 const LoginOrRegister = () => {
