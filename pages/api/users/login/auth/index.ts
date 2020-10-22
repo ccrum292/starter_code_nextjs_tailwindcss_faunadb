@@ -6,12 +6,11 @@ const client = new faunadb.Client({ secret })
 
 export default  async (req, res) => {
   try {
-    const dbs = await client.query(
+    const userRef = await client.query(
       q.KeyFromSecret(req.headers.token)
     )
-      // console.log(dbs.instance);
     const userData = await client.query(
-      q.Get(dbs.instance)
+      q.Get(userRef.instance)
     )
     return res.status(200).json(userData);
 

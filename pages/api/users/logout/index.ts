@@ -1,3 +1,5 @@
+import { useReducer } from "react";
+
 const faunadb = require('faunadb');
 
 const secret = process.env.FAUNADB_SECRET_KEY
@@ -6,11 +8,13 @@ const client = new faunadb.Client({ secret })
 
 export default  async (req, res) => {
   try {
-    const dbs = await client.query(
-      q.Logout(true)
+    const userRef = await client.query(
+      q.KeyFromSecret(req.headers.token)
     )
-
-    return res.status(200).json(dbs);
+    const userData = await client.query(
+      q.Delete(userRef.ref)
+    )
+    return res.status(200).json(userData);
 
   } catch (e) {
     res.status(500).json({ error: e.message })

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState, useContext } from "react";
 import { server } from "../lib/config";
 import { useRouter } from "next/router";
@@ -15,7 +14,7 @@ export default function LoginForm(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const { navOpen, setNavOpen, user, setUser, authToken, setAuthToken } = useContext(UserAndNavContext);
+  const { setUser, setAuthToken } = useContext(UserAndNavContext);
 
   const handleSubmit = async e => {
     e.preventDefault()
