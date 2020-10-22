@@ -23,7 +23,7 @@ export default function IndexPage(props) {
       <Nav />
       <div className="flex-grow lg:flex">
         {navOpen ? null : (
-          <div className="hidden lg:block">
+          <div className="hidden lg:block w-48">
             <SideNavMenu />
           </div>
         )}

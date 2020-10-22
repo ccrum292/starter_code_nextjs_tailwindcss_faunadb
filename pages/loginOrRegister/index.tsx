@@ -17,7 +17,7 @@ export default function LoginOrRegister() {
       <Nav />
       <div className="flex-grow flex">
         {navOpen ? null : (
-          <div className="hidden lg:block">
+          <div className="hidden lg:block w-48">
             <SideNavMenu />
           </div>
         )}
