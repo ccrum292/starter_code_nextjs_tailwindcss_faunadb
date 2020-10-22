@@ -1,23 +1,37 @@
-import '../styles/index.css'
-// import SearchContext from "../context/searchContext"
-import UserAndSearchContext from "../context/userAndNavContext"
-import { useState, useMemo } from "react"
+import '../styles/index.css';
+import UserAndNavContext from "../context/userAndNavContext";
+import { useState, useMemo, useEffect } from "react";
 import { AppProps } from "next/app";
+import signInUserWithAuthToken from "../lib/ts/signInUserWithAuthToken";
+import TokenStore from "../lib/ts/TokenStore";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // const [search, setSearch] = useState("")
-  // const [searchHistory, setSearchHistory] = useState([{ id: 0, text: "test1" }, { id: 1, text: "test2" }]);
+
+
   const [navOpen, setNavOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [authToken, setAuthToken] = useState(null);
 
-  const value = useMemo(() => ({ navOpen, setNavOpen }), [navOpen, setNavOpen]);
 
+  useEffect(() => {
+    const setUserOnPageLoad = async () => {
+      const userData = await signInUserWithAuthToken()
+      if (!userData) return
+      setUser(userData)
+      setAuthToken(TokenStore.getToken())
+    }
+
+    setUserOnPageLoad();
+  }, [])
+  
+  const value = useMemo(() => ({ navOpen, setNavOpen, user, setUser, authToken, setAuthToken }), [navOpen, setNavOpen, user, setUser, authToken, setAuthToken]);
   return (
     (
-    <UserAndSearchContext.Provider value={value}>
+      <UserAndNavContext.Provider value={value}>
       
       <Component {...pageProps} />
     
-    </UserAndSearchContext.Provider>
+      </UserAndNavContext.Provider>
   )
   );
 }

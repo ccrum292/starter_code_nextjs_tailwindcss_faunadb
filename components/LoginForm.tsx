@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { server } from "../lib/config";
 import { useRouter } from "next/router";
+import TokenStore from "../lib/ts/TokenStore";
+import signInUserWithAuthToken from "../lib/ts/signInUserWithAuthToken";
+import UserAndNavContext from "../context/userAndNavContext";
 
 interface UserLoginBody {
   email: string,
@@ -12,10 +15,10 @@ export default function LoginForm(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { navOpen, setNavOpen, user, setUser, authToken, setAuthToken } = useContext(UserAndNavContext);
 
   const handleSubmit = async e => {
     e.preventDefault()
-    console.log("hit")
     if (email.length === 0 && password.length === 0) {
       return
     }
@@ -34,7 +37,10 @@ export default function LoginForm(props) {
     })
 
     const data = await res.json();
-    console.log(data);
+    TokenStore.setToken(data.secret);
+    const userData = await signInUserWithAuthToken()
+    setUser(userData);
+    setAuthToken(data.secret);
     router.push('/')
 
   }

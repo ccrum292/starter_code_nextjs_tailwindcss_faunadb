@@ -99,6 +99,14 @@ returns
   partitions: 1
 }
 
+create a index for Tokens  NOT DONE
+
+CreateIndex({
+  name: 'users_by_tokens',
+  permissions: { read: "public" },
+  source: Collection()
+})
+
 
 create users
 

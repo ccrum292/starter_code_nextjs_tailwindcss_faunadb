@@ -6,23 +6,9 @@ import UserAndNavContext from "../context/userAndNavContext";
 import { GetStaticProps } from "next";
 import { server } from "../lib/config";
 
-export const getStaticProps: GetStaticProps = async () => {
-
-  const res = await fetch(`${server}/api/users/login`);
-  const data = await res.json();
-  console.log(data);
-  return {
-    props: {
-      data
-    }
-  }
-}
-
-
-
 
 export default function IndexPage(props) {
-  const { navOpen, setNavOpen } = useContext(UserAndNavContext);
+  const { navOpen, setNavOpen, user, setUser, authToken, setAuthToken } = useContext(UserAndNavContext);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900">
@@ -41,7 +27,7 @@ export default function IndexPage(props) {
             <SideNavMenu />
           </div>
         )}
-        <div className=""></div>
+        <div className="text-white">{JSON.stringify(user)}</div>
       </div>
     </div>
   );
