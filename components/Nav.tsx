@@ -8,11 +8,14 @@ import Gravatar from "react-gravatar";
 import LgPillButton from "../components/LgPillButton";
 import TokenStore from "../lib/ts/TokenStore";
 import { server } from "../lib/config";
+import { useRouter } from "next/router";
+
 
 
 export default function Nav() {
   const { navOpen, setNavOpen, authToken, setAuthToken, user, setUser } = useContext(UserAndNavContext);
   const [userDropdownDiv, setUserDropdownDiv] = useState(false);
+  const router = useRouter();
 
   const handleOnClick = () => {
     setNavOpen(!navOpen);
@@ -32,6 +35,7 @@ export default function Nav() {
     TokenStore.clearToken();
     setAuthToken(null);
     setUser(null);
+    router.push("/");
   }
 
 

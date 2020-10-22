@@ -32,7 +32,7 @@ const LoginOrRegister = () => {
         )}
         {pageDisplayed ?
           <div>
-            This is a Secret Page
+            This is a Secret Page with a twist
           </div> : null
         }
 
