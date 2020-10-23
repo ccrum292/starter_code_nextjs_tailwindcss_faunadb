@@ -27,7 +27,7 @@ export default function IndexPage(props) {
             <SideNavMenu />
           </div>
         )}
-        <div className="text-white">{JSON.stringify(user)}</div>
+        <div className="text-white"></div>
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
 # starter_code_nextjs_tailwindcss_faunadb
 
-Still in development 
-
-
+This repo was created as a launching point for myself and other developers to create Next.js-tailwindcss-faundb projects.
 
 ## Use
 
-run locally with command "yarn dev" from root directory.
+From the root directory run yarn to install dependencies.
 
-vercel will need your faundb token
-vercel secrets add FAUNADB_SECRET_KEY [your-access-key]
-can also add to next.config.js
+Before first use, you will need to add a faunadb secret key both to vercel (> vercel secrets add FAUNADB_SECRET_KEY [your-access-key]) and create a next.config.js file with the same format as the example found in this repo.
+
+Use the command "yarn dev", from the root directory, to start a local app on port 3000.
+
+To deploy your app, connect your github repo to Vercel.

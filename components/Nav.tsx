@@ -91,13 +91,13 @@ export default function Nav() {
                 href="/user"
                 id={2}
                 text="User"
-                classNameTailwind="mx-4 mt-2 mb-2"
+                classNameTailwind="px-16 mt-2 mb-2"
               />
               <LgPillButton
                 handleOnClick={handleLogout}
                 id={1}
                 text="Logout"
-                classNameTailwind=""
+                classNameTailwind="px-16 mt-2 mb-2"
               />
             </> :
             <NavItem

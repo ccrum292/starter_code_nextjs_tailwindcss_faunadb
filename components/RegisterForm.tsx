@@ -16,7 +16,6 @@ export default function RegisterForm(props) {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    console.log("hit")
     if (password !== secondPassword) {
       return setError(`Passwords must match.`);
     }
@@ -35,7 +34,6 @@ export default function RegisterForm(props) {
     })
 
     const data = await res.json();
-    console.log(data);
     props.setSuccessfulRegistration(true);
     props.setIndexOfActiveTab(0);
   }
