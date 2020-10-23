@@ -6,10 +6,8 @@ import NavItem from "./NavItem";
 import UserAndNavContext from "../context/userAndNavContext";
 import Gravatar from "react-gravatar";
 import LgPillButton from "../components/LgPillButton";
-import TokenStore from "../lib/ts/TokenStore";
-import { server } from "../lib/config";
 import { useRouter } from "next/router";
-
+import handleLogoutAPI from "../lib/ts/handleLogout";
 
 
 export default function Nav() {
@@ -22,17 +20,8 @@ export default function Nav() {
   };
 
   const handleLogout = async () => {
-    const token = TokenStore.getToken();
-    if (!token) return
-    const res = await fetch(`${server}/api/users/logout`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        token: token
-      }
-    })
-    const data = await res.json();
-    TokenStore.clearToken();
+    const data = await handleLogoutAPI()
+    if (!data) return
     setAuthToken(null);
     setUser(null);
     router.push("/");
@@ -95,13 +84,31 @@ export default function Nav() {
             text="Home"
             classNameTailwind="px-16 mt-2 mb-2"
           />
-          <NavItem
-            handleOnClick={handleOnClick}
-            href="/loginOrRegister"
-            id={1}
-            text="Login or Register"
-            classNameTailwind="px-16 mt-2 mb-2"
-          />
+          {authToken ?
+            <>
+              <NavItem
+                handleOnClick={handleOnClick}
+                href="/user"
+                id={2}
+                text="User"
+                classNameTailwind="mx-4 mt-2 mb-2"
+              />
+              <LgPillButton
+                handleOnClick={handleLogout}
+                id={1}
+                text="Logout"
+                classNameTailwind=""
+              />
+            </> :
+            <NavItem
+              handleOnClick={handleOnClick}
+              href="/loginOrRegister"
+              id={1}
+              text="Login or Register"
+              classNameTailwind="px-16 mt-2 mb-2"
+            /> 
+
+          }
         </div>
       ) : null}
     </>

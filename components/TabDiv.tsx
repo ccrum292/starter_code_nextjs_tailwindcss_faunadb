@@ -10,8 +10,8 @@ export default function TabDiv() {
     setIndexOfActiveTab(e.target.value);
   }
 
-  const tabActive = "cursor-pointer jost border-t-4 border-r-4 border-l-4 rounded-t-lg py-2 px-4 text-white font-semibold bg-gray-800 transition duration-500 ease-in-out transform hover:bg-gray-800 hover:underline";
-  const tabInactive = "cursor-pointer py-2 px-4 jost text-white cursor-pointer border-b-4 rounded-t-lg transition duration-500 ease-in-out transform hover:bg-gray-800 hover:underline";
+  const tabActive = "cursor-pointer jost border-t-4 border-r-4 border-l-4 rounded-t-lg py-2 px-4 text-white font-semibold bg-red-800 transition duration-500 ease-in-out transform hover:bg-gray-800 hover:underline";
+  const tabInactive = "cursor-pointer py-2 px-4 jost text-white cursor-pointer rounded-t-lg transition duration-500 ease-in-out transform hover:bg-gray-800 hover:underline";
 
   return (
     <div className="flex-grow flex flex-col items-center justify-center lg:w-8/12 lg:mx-auto">
@@ -25,7 +25,7 @@ export default function TabDiv() {
             Register
           </li>
         </ul>
-        <div className="bg-gray-700 border-b-4 border-r-4 border-l-4 border-gray-300 rounded-b-lg">
+        <div className="bg-gray-700 border-4 border-gray-300 rounded-b-lg rounded--lg">
           {
             indexOfActiveTab === 0 ?
               <LoginForm successfulRegistration={successfulRegistration} setSuccessfulRegistration={setSuccessfulRegistration} /> :

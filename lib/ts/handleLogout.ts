@@ -2,21 +2,19 @@ import TokenStore from "./TokenStore";
 import { server } from "../config";
 
 
-const signInUserWithAuthToken = async () => {
+const handleLogoutAPI = async () => {
   const token = TokenStore.getToken();
   if (!token) return
-  const res = await fetch(`${server}/api/users/login/auth`, {
-    method: 'GET',
+  const res = await fetch(`${server}/api/users/logout`, {
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       token: token
     }
   })
   const data = await res.json();
-  return {
-    email: data.data.email,
-    ref: data.ref
-  }
+  TokenStore.clearToken();
+  return data
 }
 
-export default signInUserWithAuthToken;
+export default handleLogoutAPI;
