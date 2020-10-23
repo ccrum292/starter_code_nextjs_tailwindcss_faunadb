@@ -11,3 +11,7 @@ Before first use, you will need to add a faunadb secret key both to vercel (> ve
 Use the command "yarn dev", from the root directory, to start a local app on port 3000.
 
 To deploy your app, connect your github repo to Vercel.
+
+## Deployed App
+
+https://starter-code-nextjs-tailwindcss-faunadb.vercel.app
